@@ -1,13 +1,13 @@
 import numpy as np
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.model_selection import cross_validate
-
+import matplotlib.pyplot as plt
 
 trees = 2500
 lr = 0.02
 
 print("n_estimators=",trees,", learning_rate=",lr)
-with open("pca_20.dat") as f:
+with open("../pca_20.dat") as f:
     data = [line.strip().split() for line in f]
     
 dim = len(data[0])-1
@@ -31,7 +31,7 @@ for i in range(1,dim+1):
 
 raw_time=0
 raw_maxv=0
-with open("data.dat") as f:
+with open("../data.dat") as f:
     data = [line.strip().split() for line in f]
 
 print("AdaBoosting with raw data")    
@@ -68,3 +68,13 @@ with open("adaboost_"+str(trees)+"_"+str(int(lr*100))+".dat","w") as f:
         line+=" "+str(i/10)
     line+="\n"
     f.write(line)
+    
+dim_x = [i for i in range(1,dim+1)]   
+fig = plt.figure()
+plt.plot(dim_x,maxv, marker = '.')
+plt.axhline(y = raw_maxv, color = 'red', linestyle = '--')
+plt.savefig("max_score.png")
+fig = plt.figure()
+ax_time.plot(dim_x,time, marker = '.')
+ax_time.axhline(y = raw_time, color = 'red', linestyle = '--')
+plt.savefig("time.png")
