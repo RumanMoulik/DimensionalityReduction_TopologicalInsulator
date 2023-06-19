@@ -3,13 +3,16 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import cross_validate
 import optuna
 from optuna.samplers import TPESampler
+from dotenv import dotenv_values
+import os
 
 with open("pca_20.dat") as f:
     data = [line.strip().split() for line in f]
-    
-dim = len(data[0])-1
 
-X=np.array([data[i][1:] for i in range(len(data))],dtype=float)
+params=dotenv_values("params")
+dim=int(params['dim'])
+
+X=np.array([data[i][1:dim+1] for i in range(len(data))],dtype=float)
 Y = np.array([int(data[i][0]) for i in range(len(data))],dtype=int).reshape([len(data)])
 
 def objective(trial):
@@ -20,7 +23,7 @@ def objective(trial):
     hl_depth = trial.suggest_int("hidden layer depth",1,10, log=True)
     hl = np.full(hl_depth,hl_size)
     clf = MLPClassifier(hidden_layer_sizes=hl,max_iter=iters, learning_rate_init=lr, alpha=alpha)
-    cvf = cross_validate(clf,X,Y,cv=5)
+    cvf = cross_validate(clf,X,Y,cv=5,n_jobs=5)
     return max(cvf['test_score'])
     
 sampler = TPESampler(seed=1)
