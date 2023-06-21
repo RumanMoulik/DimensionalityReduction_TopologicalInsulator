@@ -1,0 +1,8 @@
+N_trials= 10000
+Best TrialValue: 0.9285714285714286
+Params:
+ max_iterations: 1108
+ learning_rate_init: 0.001859449755422156
+ alpha: 2.385115393346798e-05
+ hidden layer size: 93
+ hidden layer depth: 9
