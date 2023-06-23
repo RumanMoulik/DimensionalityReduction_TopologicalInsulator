@@ -3,44 +3,54 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import cross_validate
 import pickle
 import sys
+from dotenv import dotenv_values
+import os
+import random
 
-iters = 2499
-lr = 0.000995012968825878
-alpha =  0.0001164694418284876
-hl_size=21
-hl_depth=9
+params=dotenv_values("params")
+dim = int(params['dim'])
+iters = int(params['iters'])
+lr = float(params['lr'])
+alpha = float(params['alpha'])
+hl_size = int(params['hl_size'])
+hl_depth = int(params['hl_depth'])
 hl=np.full(hl_depth,hl_size)
-
-print("Iterations: ",iters)
-print("Learning Rate: ",lr)
-print("Alpha: ",alpha)
-print("HL Depth: ",hl_depth)
-print("HL Size: ",hl_size)
-print("Random Seed: ",sys.argv[1])
+seeds = random.sample(range(0,100000), 1000)
+best_score = 0
 with open("pca_20.dat") as f:
     data = [line.strip().split() for line in f]
 
+for i in seeds:
+    print("New Model Start------------------------------------------")
+    print("Iterations: ",iters)
+    print("Learning Rate: ",lr)
+    print("Alpha: ",alpha)
+    print("HL Depth: ",hl_depth)
+    print("HL Size: ",hl_size)
+    print("Random Seed: ",i)
 
-print("MLP with pca data") 
-X=np.array([data[i][1:5] for i in range(len(data))],dtype=float)
-Y = np.array([int(data[i][0]) for i in range(len(data))],dtype=int).reshape([len(data)])
+    print("MLP with pca data") 
+    X=np.array([data[i][1:dim+1] for i in range(len(data))],dtype=float)
+    Y = np.array([int(data[i][0]) for i in range(len(data))],dtype=int).reshape([len(data)])
 
-#clf = MLPClassifier(max_iter=iters, learning_rate_init=lr, alpha=alpha, hidden_layer_sizes=hl, solver='lbfgs')
-clf = MLPClassifier(max_iter=iters, learning_rate_init=lr, alpha=alpha, hidden_layer_sizes=hl, random_state=int(sys.argv[1]))
-cvf = cross_validate(clf,X,Y,cv=5,return_estimator=True, n_jobs=-1)
-#print(round(clf.score(X_test,Y_test),5),end=' ')
-print(cvf['fit_time'])
-print(cvf['test_score'])
+    clf = MLPClassifier(max_iter=iters, learning_rate_init=lr, alpha=alpha, hidden_layer_sizes=hl, random_state=i)
+    cvf = cross_validate(clf,X,Y,cv=5,return_estimator=True, n_jobs=5)
+    print(cvf['fit_time'])
+    print(cvf['test_score'])
 
-print("average value Summary")
-Average = sum(cvf['test_score'])/len(cvf['test_score'])
-print(Average)
+    print("maximum value Summary")
+    max_ind = np.argmax(cvf['test_score'])
+    print(max_ind, max(cvf['test_score']))
 
-print("maximum value Summary")
-max_ind = np.argmax(cvf['test_score'])
-print(max_ind, max(cvf['test_score']))
+    clf_best = cvf['estimator'][max_ind]
+    score = clf_best.score(X,Y)
+    print("score on whole dataset: ",score)
 
-clf_best = cvf['estimator'][max_ind]
-print("score on whole dataset: ",clf_best.score(X,Y))
-
-pickle.dump(clf_best, open("trained_mlp.pkl", 'wb'))
+    if score > best_score:
+        best_score=score
+        print("Saving this model")
+        pickle.dump(clf_best, open("trained_mlp.pkl", 'wb'))
+        
+    print("-----------------------------------\n")
+    
+print("Highest score attained: ", best_score)
