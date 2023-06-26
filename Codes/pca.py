@@ -8,7 +8,7 @@ from pickle import dump
 with open("data.dat") as f:
     data = [line.strip().split() for line in f]
     
-X=np.array([data[i][1:-3] for i in range(1,len(data))])
+X=np.array([data[i][1:-1] for i in range(1,len(data))])
 #print(np.shape(X))
 samples, features = np.shape(X)
 Y = np.array([int(data[i][-1]) for i in range(1,len(data))]).reshape([len(data)-1])
