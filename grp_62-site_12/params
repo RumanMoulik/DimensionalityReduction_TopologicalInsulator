@@ -1,6 +1,6 @@
 dim=6
-iters=1697
-lr=0.00016510138782425903
+iters=2000
+lr=0.00015
 alpha=0.0001346690884351217
-hl_size=131
-hl_depth=2
+hl_size=135
+hl_depth=3
