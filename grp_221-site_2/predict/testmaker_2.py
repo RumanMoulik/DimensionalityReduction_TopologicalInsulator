@@ -1,8 +1,7 @@
 import pymatgen.core as mp
 import sys
-sys.path.append("/home/ruman/Desktop/codes/pymatgen/trainmaker")
+sys.path.append("../../Codes/")
 import core_radii as cr
-from shannon import shannon_lookup 
 from math import log
 import re
 import random
@@ -24,10 +23,12 @@ with open("../materiae.dat") as f:
         topo.append("1" if words[4]=="TI" or words[4]=="TCI" else "0")
 
 with MPRester("XUCu3DLWy99hFoeU3hAg0N62eyiEQENW") as mpr:
-    props = ['material_id','formula_pretty','elements','structure']
+    props = ['material_id','formula_pretty','elements','structure','is_magnetic']
     searc=mpr.summary.search(spacegroup_number=sg, num_sites=ns,fields=props)
 
 for i in searc:
+    if i.is_magnetic==True:
+        continue
     structure = i.structure
     sg = SpacegroupAnalyzer(structure)
     sit = structure.sites
@@ -41,6 +42,9 @@ for i in searc:
         el = [sit[0].specie,sit[1].specie]
     else:
         el = [sit[1].specie,sit[0].specie]
+            
+    if ((el[0].Z+el[1].Z)%2==1):
+        continue
         
     #electronegativity
     for j in range(len(el)):
