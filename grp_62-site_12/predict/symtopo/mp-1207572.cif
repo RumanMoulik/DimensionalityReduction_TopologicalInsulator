@@ -1,0 +1,38 @@
+# generated using pymatgen
+data_YbAlRh
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   3.98490292
+_cell_length_b   6.97269386
+_cell_length_c   7.91241956
+_cell_angle_alpha   90.00000000
+_cell_angle_beta   90.00000000
+_cell_angle_gamma   90.00000000
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   YbAlRh
+_chemical_formula_sum   'Yb4 Al4 Rh4'
+_cell_volume   219.85059796
+_cell_formula_units_Z   4
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Yb  Yb0  1  0.75000000  0.97143230  0.32907668  1
+  Yb  Yb1  1  0.25000000  0.02856770  0.67092332  1
+  Yb  Yb2  1  0.25000000  0.52856770  0.82907668  1
+  Yb  Yb3  1  0.75000000  0.47143230  0.17092332  1
+  Al  Al4  1  0.75000000  0.86571547  0.94368797  1
+  Al  Al5  1  0.25000000  0.13428453  0.05631203  1
+  Al  Al6  1  0.25000000  0.63428453  0.44368797  1
+  Al  Al7  1  0.75000000  0.36571547  0.55631203  1
+  Rh  Rh8  1  0.75000000  0.71978242  0.63239977  1
+  Rh  Rh9  1  0.25000000  0.28021758  0.36760023  1
+  Rh  Rh10  1  0.25000000  0.78021758  0.13239977  1
+  Rh  Rh11  1  0.75000000  0.21978242  0.86760023  1
