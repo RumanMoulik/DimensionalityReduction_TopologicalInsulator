@@ -4,6 +4,38 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.decomposition import KernelPCA, PCA
 from dotenv import dotenv_values
 
+def loadsystem(choice):
+    file_names = ["grp_62-site_12","grp_139-site_5","grp_189-site_9","grp_221-site_2","grp_221-site_5","grp_225-site_2"]
+    folder = file_names[choice-1]
+
+    params=dotenv_values("../params")
+    #dim=int(params['dim'])
+
+    mlp = pickle.load(open("../"+folder+"/trained_mlp.pkl","rb"))
+    pca = pickle.load(open("../"+folder+"/trained_pca.pkl","rb"))
+    scaler = pickle.load(open("../"+folder+"/trained_scaler.pkl","rb"))
+
+    return params, mlp, pca, scaler
+
+def elem_input(site_count):
+    print("Enter first site substitution")
+    el1 = 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 params=dotenv_values("../params")
 dim=int(params['dim'])
 
