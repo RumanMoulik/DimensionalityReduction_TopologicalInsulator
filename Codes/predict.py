@@ -18,10 +18,17 @@ def loadsystem(choice):
     return params, mlp, pca, scaler
 
 def elem_input(site_count):
+    el=[]
     print("Enter first site substitution")
-    el1 = 
+    el.append() = input()
+    print("Enter second site substitution")
+    el.append() = input()
+    if site_count == 3:
+        print("Enter third site substitution")
+        el.append() = input()
+    return el
 
-
+while(1)
 
 
 
