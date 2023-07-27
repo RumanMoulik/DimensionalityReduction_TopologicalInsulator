@@ -3,9 +3,11 @@ import pickle
 from sklearn.neural_network import MLPClassifier
 from sklearn.decomposition import KernelPCA, PCA
 from dotenv import dotenv_values
+file_names = ["grp_62-site_12","grp_139-site_5","grp_189-site_9","grp_221-site_2","grp_221-site_5","grp_225-site_2"]
+
+
 
 def loadsystem(choice):
-    file_names = ["grp_62-site_12","grp_139-site_5","grp_189-site_9","grp_221-site_2","grp_221-site_5","grp_225-site_2"]
     folder = file_names[choice-1]
 
     params=dotenv_values("../params")
@@ -28,7 +30,8 @@ def elem_input(site_count):
         el.append() = input()
     return el
 
-while(1)
+while(1):
+    print("Pick your system")
 
 
 
