@@ -7,6 +7,12 @@ file_names = ["grp_62-site_12","grp_139-site_5","grp_189-site_9","grp_221-site_2
 fig_maxv,ax_maxv = plt.subplots(2,3, figsize=(6.5,3.5), sharex=True,sharey=True)
 dim_x = [i for i in range(1,21)]
 fig_maxv.subplots_adjust(hspace=0.1,wspace=0.1)
+ax_maxv[0,0].axvline(x = 6, color = 'grey', linestyle = '--')
+ax_maxv[1,0].axvline(x = 4, color = 'grey', linestyle = '--')
+ax_maxv[0,1].axvline(x = 4, color = 'grey', linestyle = '--')
+ax_maxv[1,1].axvline(x = 6, color = 'grey', linestyle = '--')
+ax_maxv[0,2].axvline(x = 3, color = 'grey', linestyle = '--')
+ax_maxv[1,2].axvline(x = 3, color = 'grey', linestyle = '--')
 
 
 for i in range(0,6):
@@ -17,10 +23,12 @@ for i in range(0,6):
         data = [line.strip().split() for line in f]
         raw_maxv = float(data[1][2])
         maxv = [float(num) for num in data[2]]
-            
+    
+    ax_maxv[row,col].axhline(y = raw_maxv, color = 'red', linestyle = '--')        
     ax_maxv[row,col].plot(dim_x,maxv, marker = '.',color="c")
-    ax_maxv[row,col].axhline(y = raw_maxv, color = 'red', linestyle = '--')
     ax_maxv[row,col].set_title(graph_titles[i],x=0.5,y=0.01,fontsize=8)
+    
+
 
 ax_maxv[0,0].set_xticks([1,5,10,15,20],[1,5,10,15,20])    
 ax_maxv[0,0].tick_params(axis='both', which='major', labelsize=8)
@@ -40,7 +48,7 @@ with open("grp_221-site_5/adaboost/adaboost_2500_2.dat") as f:
     time2 = [float(num) for num in data[5]]
     
 
-fig_time = plt.figure(figsize=[3.1,3.5])
+fig_time = plt.figure(figsize=[4,3.5])
 plt.plot(dim_x,time1, marker = 'o', color="blue", label=graph_titles[3])
 plt.plot(dim_x,time2, marker = 's', color="orange", label=graph_titles[4])
 plt.axhline(y = raw_time1, linestyle = '--', color="c", label=graph_titles[3]+" raw data")
